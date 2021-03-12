@@ -1,6 +1,6 @@
 import React from "react";
 import { Alert } from "react-native";
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation, CommonActions } from "@react-navigation/core";
 import { useFormik } from "formik";
 import { observer } from "mobx-react-lite";
 import { Button, Appbar, Title, Subheading } from "react-native-paper";
@@ -13,11 +13,11 @@ import {
   Error,
   InputWrapper,
 } from "./styles";
-import { Routes, Stacks } from "../../router";
+import { Stacks } from "../../router";
 import { useLoading } from "../../hooks";
 
-const Login = observer(() => {
-  const { navigate } = useNavigation();
+function Login() {
+  const { dispatch } = useNavigation();
   const { loading, triggerLoading } = useLoading();
   const { login } = useUser();
   const {
@@ -35,9 +35,16 @@ const Login = observer(() => {
       try {
         triggerLoading(true);
         await login(email, password);
-        navigate(Stacks.Private, {
-          screen: Routes.Login,
-        });
+        dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [
+              {
+                name: Stacks.Private,
+              },
+            ],
+          })
+        );
       } catch (err) {
         if (!err.response.data.message) {
           Alert.alert(
@@ -93,6 +100,6 @@ const Login = observer(() => {
       </ContentWrapper>
     </Wrapper>
   );
-});
+}
 
-export default Login;
+export default observer(Login);

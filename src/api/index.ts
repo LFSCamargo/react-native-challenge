@@ -22,6 +22,7 @@ export type User = {
   email: string;
   _id: string;
   birthDate: string;
+  picture: string;
 };
 
 export async function getLoggedUser() {
@@ -37,17 +38,5 @@ export async function loginUser(params: { email: string; password: string }) {
   const { data } = await api.post<AuthOutput>("/login", {
     ...params,
   });
-  return data;
-}
-
-export type SignUpParams = {
-  email: string;
-  name: string;
-  birthDate: string;
-  password: string;
-};
-
-export async function signUpUser(params: SignUpParams) {
-  const { data } = await api.post<AuthOutput>("/register");
   return data;
 }

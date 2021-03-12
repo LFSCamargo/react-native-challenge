@@ -1,12 +1,12 @@
 import React from "react";
 import { observable, action } from "mobx";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { SignUpParams, getLoggedUser, loginUser, signUpUser } from "../api";
+import { getLoggedUser, loginUser, User as IUser } from "../api";
 import { createContext, FC, useContext } from "react";
 
 export class User {
   @observable
-  user: User | null = null;
+  user: IUser | null = null;
 
   @action
   getUser = async (shouldTriggerLoading: boolean = false) => {
@@ -21,13 +21,6 @@ export class User {
       password,
     });
 
-    await AsyncStorage.setItem("token", token);
-    await this.getUser();
-  };
-
-  @action
-  signUp = async (params: SignUpParams) => {
-    const { token } = await signUpUser(params);
     await AsyncStorage.setItem("token", token);
     await this.getUser();
   };
