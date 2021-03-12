@@ -3,17 +3,17 @@ import { useCallback, useEffect, useState } from "react";
 
 export function useToken() {
   const [loading, setLoading] = useState(false);
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState<string | null>(null);
 
   const getData = useCallback(async () => {
     setLoading(true);
-    const token = (await AsyncStorage.getItem("token")) || "";
+    const token = await AsyncStorage.getItem("token");
     setToken(token);
     setLoading(false);
   }, []);
 
   useEffect(() => {
-    getData;
+    getData();
   }, []);
 
   return {
