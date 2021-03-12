@@ -40,12 +40,14 @@ export async function loginUser(params: { email: string; password: string }) {
   return data;
 }
 
-export async function signUpUser(params: {
+export type SignUpParams = {
   email: string;
   name: string;
   birthDate: string;
   password: string;
-}) {
+};
+
+export async function signUpUser(params: SignUpParams) {
   const { data } = await api.post<AuthOutput>("/register");
   return data;
 }
