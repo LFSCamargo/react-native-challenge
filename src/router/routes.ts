@@ -4,6 +4,7 @@ export enum Stacks {
 }
 
 export enum Routes {
-  Home = "private/Home",
-  Login = "public/Login",
+  Home = "Home",
+  Version = "Version",
+  Login = "Login",
 }
