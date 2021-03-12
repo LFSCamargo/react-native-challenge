@@ -1,3 +1,4 @@
+import React from "react";
 import { observable, action } from "mobx";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SignUpParams, getLoggedUser, loginUser, signUpUser } from "../api";
@@ -8,7 +9,7 @@ export class User {
   user: User | null = null;
 
   @action
-  getUser = async () => {
+  getUser = async (shouldTriggerLoading: boolean = false) => {
     const user = await getLoggedUser();
     this.user = user;
   };
